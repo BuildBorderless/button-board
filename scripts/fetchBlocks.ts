@@ -53,9 +53,10 @@ const main = async () => {
     const blocks: Block[] = []
 
     for (let t of timestamps) {
+        const tSeconds = Math.floor(t / 1000)
         // https://ethereum.stackexchange.com/questions/49486/how-to-get-the-block-number-which-is-the-closest-to-a-given-timestamp
         const r = await axios.get(
-            `https://coins.llama.fi/block/ethereum/${t / 1000}`
+            `https://coins.llama.fi/block/ethereum/${tSeconds}`
         )
         blocks.push(r.data)
         await sleep(1000)
