@@ -1,0 +1,39 @@
+fragment bondData on Bond {
+    id
+    startDate
+    maturityDate
+    totalCollateral
+    totalDebt
+    isMature
+    collateral {
+        name
+        symbol
+        id
+        decimals
+    }
+}
+
+fragment blockData on _Meta_ {
+    block {
+        number
+        timestamp
+    }
+}
+
+query Bonds {
+    bonds {
+        ...bondData
+    }
+    _meta {
+        ...blockData
+    }
+}
+
+query BondsAtBlock($blockNumber: Int!) {
+    bonds(block: { number: $blockNumber }) {
+        ...bondData
+    }
+    _meta {
+        ...blockData
+    }
+}

@@ -1,0 +1,8 @@
+sources:
+    - name: tranche
+      handler:
+          graphql:
+              endpoint: https://api.thegraph.com/subgraphs/name/buttonwood-protocol/tranche
+
+documents:
+    - ./src/.graphql

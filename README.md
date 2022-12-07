@@ -8,6 +8,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 npx ts-node scripts/fetchBlocks.ts
 ```
 
+## Generate Typed GraphQL Data
+
+```
+npx graphclient build && rm -rf src/.graphclient && mv .graphclient src
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
