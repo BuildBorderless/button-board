@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Fetch Blocks
+
+```
+npx ts-node scripts/fetchBlocks.ts
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
