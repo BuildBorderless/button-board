@@ -5,17 +5,21 @@ const sleep = (milliseconds: number) => {
 }
 
 enum Interval {
-    day="day",
-    month="month",
-    year="year",
+    day = "day",
+    month = "month",
+    year = "year",
 }
-    
-const getTimestamps = (args: {interval: Interval, start: Date, end?: Date}) => {
+
+const getTimestamps = (args: {
+    interval: Interval
+    start: Date
+    end?: Date
+}) => {
     let date = args.start
     const end = args.end ?? new Date()
     let increase
 
-    switch(args.interval) {
+    switch (args.interval) {
         case Interval.day:
             increase = (date: Date) => date.setDate(date.getDate() + 1)
             break
@@ -32,22 +36,27 @@ const getTimestamps = (args: {interval: Interval, start: Date, end?: Date}) => {
         timestamps.push(date.valueOf())
         increase(date)
     }
-    
+
     return timestamps
 }
 
 type Block = {
-    height: number,
-    timestamp: number,
+    height: number
+    timestamp: number
 }
 
 const main = async () => {
-    const timestamps = getTimestamps({interval: Interval.month, start: new Date(2021, 12)})
+    const timestamps = getTimestamps({
+        interval: Interval.month,
+        start: new Date(2021, 12),
+    })
     const blocks: Block[] = []
 
     for (let t of timestamps) {
         // https://ethereum.stackexchange.com/questions/49486/how-to-get-the-block-number-which-is-the-closest-to-a-given-timestamp
-        const r = await axios.get(`https://coins.llama.fi/block/ethereum/${t/1000}`)
+        const r = await axios.get(
+            `https://coins.llama.fi/block/ethereum/${t / 1000}`
+        )
         blocks.push(r.data)
         await sleep(1000)
     }
