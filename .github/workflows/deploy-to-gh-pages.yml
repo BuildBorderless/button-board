@@ -10,13 +10,12 @@ jobs:
             - name: Checkout 🛎️
               uses: actions/checkout@v3
 
-            - name: Install Dependencies 🔧
-              run: npm ci
-
-            - name: Configure Author Identity 👤
+            - name: Install and Build 🔧
               run: |
-                  git config user.email "maui.r@tuta.io"
-                  git config user.name "Maui"
+                  npm ci
+                  npm run build
 
-            - name: Build and Deploy 🚀
-              run: npm run deploy
+            - name: Deploy 🚀
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                  folder: build
