@@ -6,6 +6,7 @@ export const BondsTreeMap = ({ bonds }: { bonds: Bond[] }) => {
     const raw: any = {}
     bonds.forEach((b) => {
         if (b.isMature) return
+        if (b.totalCollateral === 0 && b.totalDebt === 0) return
 
         if (!(b.collateral.id in raw)) {
             raw[b.collateral.id] = {
