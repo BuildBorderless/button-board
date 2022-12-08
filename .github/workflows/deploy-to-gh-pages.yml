@@ -13,5 +13,10 @@ jobs:
             - name: Install Dependencies 🔧
               run: npm ci
 
+            - name: Configure Author Identity 👤
+              run: |
+                  git config user.email "maui.r@tuta.io"
+                  git config user.name "Maui"
+
             - name: Build and Deploy 🚀
               run: npm run deploy
