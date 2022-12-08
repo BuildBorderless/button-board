@@ -1,4 +1,5 @@
 import axios from "axios"
+import { RawBlock } from "../src/types"
 
 const sleep = (milliseconds: number) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds))
@@ -40,17 +41,12 @@ const getTimestamps = (args: {
     return timestamps
 }
 
-type Block = {
-    height: number
-    timestamp: number
-}
-
 const main = async () => {
     const timestamps = getTimestamps({
         interval: Interval.month,
-        start: new Date(2021, 12),
+        start: new Date(2021, 11),
     })
-    const blocks: Block[] = []
+    const blocks: RawBlock[] = []
 
     for (let t of timestamps) {
         const tSeconds = Math.floor(t / 1000)
@@ -58,7 +54,11 @@ const main = async () => {
         const r = await axios.get(
             `https://coins.llama.fi/block/ethereum/${tSeconds}`
         )
-        blocks.push(r.data)
+        const block = {
+            number: r.data.height,
+            timestamp: r.data.timestamp * 1000,
+        }
+        blocks.push(block)
         await sleep(1000)
     }
     console.log(blocks)

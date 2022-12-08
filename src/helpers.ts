@@ -26,6 +26,10 @@ export const parseBond = (rawBond: RawBond, block: RawBlock): Bond => {
     }
 }
 
+export const parseBonds = (rawBonds: RawBond[], block: RawBlock) => {
+    return rawBonds.map((b: RawBond) => parseBond(b, block))
+}
+
 export const dateToString = (date: Date) => {
     return date.toISOString().split("T")[0]
 }

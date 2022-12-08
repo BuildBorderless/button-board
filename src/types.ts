@@ -42,3 +42,7 @@ export type Bond = {
     totalDebt: number
     block: Block
 }
+
+export type BondsAtTimestamp = {
+    [key: number]: Bond[]
+}

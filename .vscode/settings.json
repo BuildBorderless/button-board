@@ -5,6 +5,7 @@
         "graphprotocol",
         "nivo",
         "predeploy",
+        "serie",
         "treemap"
     ]
 }

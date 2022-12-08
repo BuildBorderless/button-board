@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
-import { BondsDocument, execute } from "./.graphclient"
-import { parseBond } from "./helpers"
-import { Bond, RawBond } from "./types"
-import "./App.css"
+import { BondsAtBlockDocument, BondsDocument, execute } from "./.graphclient"
+import { BLOCKS_MONTHLY } from "./constants"
+import { BondsAtTimestamp } from "./types"
+import { parseBonds } from "./helpers"
+import { BondsAreaBump } from "./components/AreaBump"
 import { BondsTreeMap } from "./components/TreeMap"
+import "./App.css"
 
 const Loading = () => {
     return (
@@ -27,30 +29,55 @@ const Error = () => {
 
 const App = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [currentBonds, setCurrentBonds] = useState<Bond[] | undefined>()
+    const [currentTimestamp, setCurrentTimestamp] = useState<
+        number | undefined
+    >()
+    const [bondsAtTimestamp, setBondsAtTimestamp] = useState<
+        BondsAtTimestamp | undefined
+    >()
 
     useEffect(() => {
         const fetchChartData = async () => {
-            const currentBondsResult = await execute(BondsDocument, {})
-            const block = currentBondsResult.data._meta.block
-            setCurrentBonds(
-                currentBondsResult.data.bonds.map((b: RawBond) =>
-                    parseBond(b, block)
-                )
-            )
+            const bondsTimeSeries: BondsAtTimestamp = {}
+            // fetch
+            for (const dataPoint of BLOCKS_MONTHLY) {
+                const r = await execute(BondsAtBlockDocument, {
+                    blockNumber: dataPoint.number,
+                })
+                let bonds
+                if (!r.data) {
+                    console.error("No data for block", dataPoint.number)
+                    bonds = parseBonds([], dataPoint)
+                } else {
+                    bonds = parseBonds(r.data.bonds, dataPoint)
+                }
+                bondsTimeSeries[dataPoint.timestamp] = bonds
+            }
+            const r = await execute(BondsDocument, {})
+            const bonds = parseBonds(r.data.bonds, r.data._meta.block)
+            const timestamp = bonds[0].block.date.valueOf()
+            setCurrentTimestamp(timestamp)
+            bondsTimeSeries[timestamp] = bonds
+            setBondsAtTimestamp(bondsTimeSeries)
         }
         fetchChartData()
             .then(() => setIsLoading(false))
-            .catch(console.error)
+            .catch((e) => {
+                console.error(e)
+                setIsLoading(false)
+            })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (isLoading) return <Loading />
-    if (!currentBonds) return <Error />
+    if (!bondsAtTimestamp || !currentTimestamp) return <Error />
     return (
         <div className="App">
             <div className="App-fullscreen">
-                <BondsTreeMap bonds={currentBonds} />
+                <h2>Collateral per Bond</h2>
+                <BondsAreaBump bondsAtTimestamp={bondsAtTimestamp} />
+                <h2>Collateral To Debt Ratio</h2>
+                <BondsTreeMap bonds={bondsAtTimestamp[currentTimestamp]} />
             </div>
         </div>
     )
