@@ -22,7 +22,9 @@
         "build": "CI=false && react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": [
@@ -47,6 +49,7 @@
         "@graphprotocol/client-cli": "^2.2.15",
         "axios": "^1.2.1",
         "eslint-config-prettier": "^8.5.0",
+        "gh-pages": "^4.0.0",
         "husky": "^8.0.2",
         "lint-staged": "^13.1.0",
         "prettier": "^2.8.1",
@@ -55,5 +58,6 @@
     },
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
-    }
+    },
+    "homepage": "https://buildborderless.github.io/button-board"
 }

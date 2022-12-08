@@ -10,12 +10,8 @@ jobs:
             - name: Checkout 🛎️
               uses: actions/checkout@v3
 
-            - name: Install and Build 🔧
-              run: |
-                  npm ci
-                  npm run build
+            - name: Install Dependencies 🔧
+              run: npm ci
 
-            - name: Deploy 🚀
-              uses: JamesIves/github-pages-deploy-action@v4
-              with:
-                  folder: build
+            - name: Build and Deploy 🚀
+              run: npm run deploy
