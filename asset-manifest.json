@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.937ef970.css",
-    "main.js": "/static/js/main.9daa05d0.js",
-    "static/js/181.34fbd3c8.chunk.js": "/static/js/181.34fbd3c8.chunk.js",
-    "static/js/496.a4acdb10.chunk.js": "/static/js/496.a4acdb10.chunk.js",
-    "index.html": "/index.html",
-    "main.937ef970.css.map": "/static/css/main.937ef970.css.map",
-    "main.9daa05d0.js.map": "/static/js/main.9daa05d0.js.map",
-    "181.34fbd3c8.chunk.js.map": "/static/js/181.34fbd3c8.chunk.js.map",
-    "496.a4acdb10.chunk.js.map": "/static/js/496.a4acdb10.chunk.js.map"
+    "main.css": "/button-board/static/css/main.937ef970.css",
+    "main.js": "/button-board/static/js/main.d1351677.js",
+    "static/js/181.34fbd3c8.chunk.js": "/button-board/static/js/181.34fbd3c8.chunk.js",
+    "static/js/496.a4acdb10.chunk.js": "/button-board/static/js/496.a4acdb10.chunk.js",
+    "index.html": "/button-board/index.html",
+    "main.937ef970.css.map": "/button-board/static/css/main.937ef970.css.map",
+    "main.d1351677.js.map": "/button-board/static/js/main.d1351677.js.map",
+    "181.34fbd3c8.chunk.js.map": "/button-board/static/js/181.34fbd3c8.chunk.js.map",
+    "496.a4acdb10.chunk.js.map": "/button-board/static/js/496.a4acdb10.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.937ef970.css",
-    "static/js/main.9daa05d0.js"
+    "static/js/main.d1351677.js"
   ]
 }
