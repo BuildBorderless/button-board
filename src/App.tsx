@@ -3,6 +3,7 @@ import { BondsAtBlockDocument, BondsDocument, execute } from "./.graphclient"
 import { BLOCKS_MONTHLY } from "./constants"
 import { BondsAtTimestamp } from "./types"
 import { parseBonds } from "./helpers"
+import { TotalValueLockedStream } from "./components/Stream"
 import { BondsAreaBump } from "./components/AreaBump"
 import { BondsTreeMap } from "./components/TreeMap"
 import "./App.css"
@@ -74,7 +75,9 @@ const App = () => {
     return (
         <div className="App">
             <div className="App-fullscreen">
-                <h2>Collateral per Bond</h2>
+                <h2>Total Value Locked</h2>
+                <TotalValueLockedStream bondsAtTimestamp={bondsAtTimestamp} />
+                <h2>Top Bonds (By Collateral)</h2>
                 <BondsAreaBump bondsAtTimestamp={bondsAtTimestamp} />
                 <h2>Collateral To Debt Ratio</h2>
                 <BondsTreeMap bonds={bondsAtTimestamp[currentTimestamp]} />
