@@ -1,5 +1,5 @@
 import { ResponsiveTreeMap } from "@nivo/treemap"
-import { dateToString } from "../../helpers"
+import { dateToString, getCdr } from "../../helpers"
 import { Bond } from "../../types"
 
 export const BondsTreeMap = ({ bonds }: { bonds: Bond[] }) => {
@@ -30,7 +30,7 @@ export const BondsTreeMap = ({ bonds }: { bonds: Bond[] }) => {
                         // +{id} suffix required to avoid duplicate key error
                         name: `${raw[k].collateral.symbol} (Maturity:
                             ${dateToString(b.maturityDate)})+${b.id}`,
-                        cdr: b.totalCollateral / b.totalDebt,
+                        cdr: getCdr(b),
                     }
                 }),
             }

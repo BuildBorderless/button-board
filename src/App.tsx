@@ -6,7 +6,12 @@ import { parseBonds } from "./helpers"
 import { TotalValueLockedStream } from "./components/Stream"
 import { BondsAreaBump } from "./components/AreaBump"
 import { BondsTreeMap } from "./components/TreeMap"
+import "@fontsource/roboto/300.css"
+import "@fontsource/roboto/400.css"
+import "@fontsource/roboto/500.css"
+import "@fontsource/roboto/700.css"
 import "./App.css"
+import { BondsTable } from "./components/Table"
 
 const Loading = () => {
     return (
@@ -75,6 +80,7 @@ const App = () => {
     return (
         <div className="App">
             <div className="App-fullscreen">
+                <BondsTable bonds={bondsAtTimestamp[currentTimestamp]} />
                 <h2>Total Value Locked</h2>
                 <TotalValueLockedStream bondsAtTimestamp={bondsAtTimestamp} />
                 <h2>Top Bonds (By Collateral)</h2>
