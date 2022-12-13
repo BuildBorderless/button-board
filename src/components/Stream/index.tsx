@@ -17,8 +17,6 @@ export const TotalValueLockedStream = ({
         return { TVL: tvl }
     })
 
-    console.log(data)
-
     return (
         <div className="App-chart-responsive">
             <ResponsiveStream

@@ -3,15 +3,16 @@ import { BondsAtBlockDocument, BondsDocument, execute } from "./.graphclient"
 import { BLOCKS_MONTHLY } from "./constants"
 import { BondsAtTimestamp } from "./types"
 import { parseBonds } from "./helpers"
+import { CollateralAreaChart } from "./components/StackedAreaChart"
 import { TotalValueLockedStream } from "./components/Stream"
 import { BondsAreaBump } from "./components/AreaBump"
 import { BondsTreeMap } from "./components/TreeMap"
+import { BondsTable } from "./components/Table"
 import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
 import "./App.css"
-import { BondsTable } from "./components/Table"
 
 const Loading = () => {
     return (
@@ -81,6 +82,8 @@ const App = () => {
         <div className="App">
             <div className="App-fullscreen">
                 <BondsTable bonds={bondsAtTimestamp[currentTimestamp]} />
+                <h2>Collateral</h2>
+                <CollateralAreaChart bondsAtTimestamp={bondsAtTimestamp} />
                 <h2>Total Value Locked</h2>
                 <TotalValueLockedStream bondsAtTimestamp={bondsAtTimestamp} />
                 <h2>Top Bonds (By Collateral)</h2>
