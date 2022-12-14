@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { BondsAtBlockDocument, BondsDocument, execute } from "./.graphclient"
 import { BLOCKS_MONTHLY } from "./constants"
-import { BondsAtTimestamp } from "./types"
+import { Bond, BondsAtTimestamp } from "./types"
 import { parseBonds } from "./helpers"
 import { CollateralAreaChart } from "./components/StackedAreaChart"
 import { TotalValueLockedStream } from "./components/Stream"
@@ -42,6 +42,8 @@ const App = () => {
     const [bondsAtTimestamp, setBondsAtTimestamp] = useState<
         BondsAtTimestamp | undefined
     >()
+    const [selected, setSelected] = useState<readonly string[]>([])
+    const bondsAtTimestampFiltered: BondsAtTimestamp = {}
 
     useEffect(() => {
         const fetchChartData = async () => {
@@ -63,6 +65,7 @@ const App = () => {
             const r = await execute(BondsDocument, {})
             const bonds = parseBonds(r.data.bonds, r.data._meta.block)
             const timestamp = bonds[0].block.date.valueOf()
+            setSelected(bonds.map((b) => b.id))
             setCurrentTimestamp(timestamp)
             bondsTimeSeries[timestamp] = bonds
             setBondsAtTimestamp(bondsTimeSeries)
@@ -78,18 +81,34 @@ const App = () => {
 
     if (isLoading) return <Loading />
     if (!bondsAtTimestamp || !currentTimestamp) return <Error />
+    Object.keys(bondsAtTimestamp).forEach((t) => {
+        bondsAtTimestampFiltered[parseInt(t)] = bondsAtTimestamp[
+            parseInt(t)
+        ].filter((b: Bond) => selected.includes(b.id))
+    })
+
     return (
         <div className="App">
             <div className="App-fullscreen">
-                <BondsTable bonds={bondsAtTimestamp[currentTimestamp]} />
+                <BondsTable
+                    bonds={bondsAtTimestamp[currentTimestamp]}
+                    selected={selected}
+                    setSelected={setSelected}
+                />
                 <h2>Collateral</h2>
-                <CollateralAreaChart bondsAtTimestamp={bondsAtTimestamp} />
+                <CollateralAreaChart
+                    bondsAtTimestamp={bondsAtTimestampFiltered}
+                />
                 <h2>Total Value Locked</h2>
-                <TotalValueLockedStream bondsAtTimestamp={bondsAtTimestamp} />
+                <TotalValueLockedStream
+                    bondsAtTimestamp={bondsAtTimestampFiltered}
+                />
                 <h2>Top Bonds (By Collateral)</h2>
-                <BondsAreaBump bondsAtTimestamp={bondsAtTimestamp} />
+                <BondsAreaBump bondsAtTimestamp={bondsAtTimestampFiltered} />
                 <h2>Collateral To Debt Ratio</h2>
-                <BondsTreeMap bonds={bondsAtTimestamp[currentTimestamp]} />
+                <BondsTreeMap
+                    bonds={bondsAtTimestampFiltered[currentTimestamp]}
+                />
             </div>
         </div>
     )

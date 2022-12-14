@@ -200,12 +200,17 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     )
 }
 
-export const BondsTable = ({ bonds }: { bonds: Bond[] }) => {
+export const BondsTable = ({
+    bonds,
+    selected,
+    setSelected,
+}: {
+    bonds: Bond[]
+    selected: readonly string[]
+    setSelected: Function
+}) => {
     const [order, setOrder] = useState<Order>("desc")
     const [orderBy, setOrderBy] = useState<keyof Data>("totalCollateral")
-    const [selected, setSelected] = useState<readonly string[]>(
-        bonds.map((b) => b.id)
-    )
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const rows = bonds.map((b) => ({
