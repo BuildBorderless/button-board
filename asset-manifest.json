@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/button-board/static/css/main.4fb253e0.css",
-    "main.js": "/button-board/static/js/main.80da86f5.js",
+    "main.js": "/button-board/static/js/main.863e0c36.js",
     "static/js/181.34fbd3c8.chunk.js": "/button-board/static/js/181.34fbd3c8.chunk.js",
     "static/js/496.a4acdb10.chunk.js": "/button-board/static/js/496.a4acdb10.chunk.js",
     "static/media/roboto-all-500-normal.woff": "/button-board/static/media/roboto-all-500-normal.0ab669b7a0d19b178f57.woff",
@@ -38,12 +38,12 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/button-board/static/media/roboto-greek-ext-700-normal.bd9854c751441ccc1a70.woff2",
     "index.html": "/button-board/index.html",
     "main.4fb253e0.css.map": "/button-board/static/css/main.4fb253e0.css.map",
-    "main.80da86f5.js.map": "/button-board/static/js/main.80da86f5.js.map",
+    "main.863e0c36.js.map": "/button-board/static/js/main.863e0c36.js.map",
     "181.34fbd3c8.chunk.js.map": "/button-board/static/js/181.34fbd3c8.chunk.js.map",
     "496.a4acdb10.chunk.js.map": "/button-board/static/js/496.a4acdb10.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4fb253e0.css",
-    "static/js/main.80da86f5.js"
+    "static/js/main.863e0c36.js"
   ]
 }
