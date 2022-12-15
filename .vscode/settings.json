@@ -4,10 +4,7 @@
         "fontsource",
         "graphclient",
         "graphprotocol",
-        "nivo",
         "predeploy",
-        "roboto",
-        "serie",
-        "treemap"
+        "roboto"
     ]
 }

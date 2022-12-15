@@ -4,9 +4,6 @@ import { BLOCKS_MONTHLY } from "./constants"
 import { Bond, BondsAtTimestamp } from "./types"
 import { parseBonds } from "./helpers"
 import { CollateralAreaChart } from "./components/StackedAreaChart"
-import { TotalValueLockedStream } from "./components/Stream"
-import { BondsAreaBump } from "./components/AreaBump"
-import { BondsTreeMap } from "./components/TreeMap"
 import { BondsTable } from "./components/Table"
 import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
@@ -98,16 +95,6 @@ const App = () => {
                 <h2>Collateral</h2>
                 <CollateralAreaChart
                     bondsAtTimestamp={bondsAtTimestampFiltered}
-                />
-                <h2>Total Value Locked</h2>
-                <TotalValueLockedStream
-                    bondsAtTimestamp={bondsAtTimestampFiltered}
-                />
-                <h2>Top Bonds (By Collateral)</h2>
-                <BondsAreaBump bondsAtTimestamp={bondsAtTimestampFiltered} />
-                <h2>Collateral To Debt Ratio</h2>
-                <BondsTreeMap
-                    bonds={bondsAtTimestampFiltered[currentTimestamp]}
                 />
             </div>
         </div>
