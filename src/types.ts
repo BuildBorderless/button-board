@@ -10,6 +10,10 @@ export interface RawCollateral {
     decimals: string
 }
 
+export interface RawTranche {
+    index: string
+    ratio: string
+}
 export interface RawBond {
     id: string
     collateral: RawCollateral
@@ -18,6 +22,7 @@ export interface RawBond {
     maturityDate: string
     totalCollateral: string
     totalDebt: string
+    tranches?: RawTranche[]
 }
 
 export type Block = {
@@ -32,6 +37,11 @@ export type Collateral = {
     decimals: number
 }
 
+export type Tranche = {
+    index: number
+    ratio: number
+}
+
 export type Bond = {
     id: string // address
     collateral: Collateral
@@ -41,6 +51,7 @@ export type Bond = {
     totalCollateral: number
     totalDebt: number
     block: Block
+    tranches?: Tranche[]
 }
 
 export type BondsAtTimestamp = {

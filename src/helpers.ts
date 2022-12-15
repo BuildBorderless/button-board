@@ -1,4 +1,11 @@
-import { Bond, RawBlock, RawBond } from "./types"
+import { Bond, RawBlock, RawBond, RawTranche, Tranche } from "./types"
+
+const parseTranche = (rawTranche: RawTranche): Tranche => {
+    return {
+        index: parseInt(rawTranche.index),
+        ratio: parseInt(rawTranche.ratio) / 10,
+    }
+}
 
 export const parseBond = (rawBond: RawBond, block: RawBlock): Bond => {
     const decimals = parseInt(rawBond.collateral.decimals)
@@ -23,6 +30,9 @@ export const parseBond = (rawBond: RawBond, block: RawBlock): Bond => {
             number: block.number,
             date: blockDate,
         },
+        tranches: rawBond.tranches
+            ? rawBond.tranches.map(parseTranche)
+            : undefined,
     }
 }
 
@@ -63,4 +73,16 @@ export const formatNumber = (num: number): string => {
     }
     num = num / 10 ** 12
     return num.toFixed(2).toString() + "T"
+}
+
+export const getTrancheRatios = (tranches: Tranche[]) => {
+    return tranches
+        .sort((a, b) => a.index - b.index)
+        .reduce((ratios, tranche) => {
+            return (ratios +=
+                tranche.ratio.toLocaleString("en-US", {
+                    maximumFractionDigits: 1,
+                }) + " / ")
+        }, "")
+        .replace(/ \/ $/gm, "") // remove trailing " / "
 }

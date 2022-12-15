@@ -13,6 +13,11 @@ fragment bondData on Bond {
     }
 }
 
+fragment trancheData on Tranche {
+    index
+    ratio
+}
+
 fragment blockData on _Meta_ {
     block {
         number
@@ -23,6 +28,9 @@ fragment blockData on _Meta_ {
 query Bonds {
     bonds {
         ...bondData
+        tranches(orderDirection: asc, orderBy: index) {
+            ...trancheData
+        }
     }
     _meta {
         ...blockData

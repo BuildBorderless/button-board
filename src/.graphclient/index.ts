@@ -1891,6 +1891,8 @@ export type bondDataFragment = Pick<
     | "isMature"
 > & { collateral: Pick<Token, "name" | "symbol" | "id" | "decimals"> }
 
+export type trancheDataFragment = Pick<Tranche, "index" | "ratio">
+
 export type blockDataFragment = { block: Pick<_Block_, "number" | "timestamp"> }
 
 export type BondsQueryVariables = Exact<{ [key: string]: never }>
@@ -1905,7 +1907,10 @@ export type BondsQuery = {
             | "totalCollateral"
             | "totalDebt"
             | "isMature"
-        > & { collateral: Pick<Token, "name" | "symbol" | "id" | "decimals"> }
+        > & {
+            tranches: Array<Pick<Tranche, "index" | "ratio">>
+            collateral: Pick<Token, "name" | "symbol" | "id" | "decimals">
+        }
     >
     _meta?: Maybe<{ block: Pick<_Block_, "number" | "timestamp"> }>
 }
@@ -1945,6 +1950,12 @@ export const bondDataFragmentDoc = gql`
         }
     }
 ` as unknown as DocumentNode<bondDataFragment, unknown>
+export const trancheDataFragmentDoc = gql`
+    fragment trancheData on Tranche {
+        index
+        ratio
+    }
+` as unknown as DocumentNode<trancheDataFragment, unknown>
 export const blockDataFragmentDoc = gql`
     fragment blockData on _Meta_ {
         block {
@@ -1957,12 +1968,16 @@ export const BondsDocument = gql`
     query Bonds {
         bonds {
             ...bondData
+            tranches(orderDirection: asc, orderBy: index) {
+                ...trancheData
+            }
         }
         _meta {
             ...blockData
         }
     }
     ${bondDataFragmentDoc}
+    ${trancheDataFragmentDoc}
     ${blockDataFragmentDoc}
 ` as unknown as DocumentNode<BondsQuery, BondsQueryVariables>
 export const BondsAtBlockDocument = gql`

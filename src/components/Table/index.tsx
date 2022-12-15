@@ -15,7 +15,12 @@ import Paper from "@mui/material/Paper"
 import Checkbox from "@mui/material/Checkbox"
 import { visuallyHidden } from "@mui/utils"
 import { Bond } from "../../types"
-import { dateToString, formatNumber, getCdr } from "../../helpers"
+import {
+    dateToString,
+    formatNumber,
+    getCdr,
+    getTrancheRatios,
+} from "../../helpers"
 
 interface Data {
     address: string
@@ -27,6 +32,7 @@ interface Data {
     totalCollateral: number
     totalDebt: number
     cdr: number
+    trancheRatios: string
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -89,6 +95,11 @@ const headCells: readonly HeadCell[] = [
         id: "cdr",
         numeric: true,
         label: "CDR",
+    },
+    {
+        id: "trancheRatios",
+        numeric: false,
+        label: "Tranche Ratios",
     },
     {
         id: "isMatureString",
@@ -223,6 +234,7 @@ export const BondsTable = ({
         totalCollateral: b.totalCollateral,
         totalDebt: b.totalDebt,
         cdr: getCdr(b),
+        trancheRatios: b.tranches ? getTrancheRatios(b.tranches) : "-",
     }))
 
     const handleRequestSort = (
@@ -358,6 +370,9 @@ export const BondsTable = ({
                                                     2
                                                 )}
                                                 %
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {row.trancheRatios}
                                             </TableCell>
                                             <TableCell align="right">
                                                 {row.isMatureString}
