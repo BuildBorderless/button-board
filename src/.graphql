@@ -45,3 +45,15 @@ query BondsAtBlock($blockNumber: Int!) {
         ...blockData
     }
 }
+
+query Bond($address: ID!) {
+    bond(id: $address) {
+        ...bondData
+        tranches(orderDirection: asc, orderBy: index) {
+            ...trancheData
+        }
+    }
+    _meta {
+        ...blockData
+    }
+}

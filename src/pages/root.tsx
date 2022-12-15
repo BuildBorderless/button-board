@@ -1,35 +1,17 @@
 import { useEffect, useState } from "react"
-import { BondsAtBlockDocument, BondsDocument, execute } from "./.graphclient"
-import { BLOCKS_MONTHLY } from "./constants"
-import { Bond, BondsAtTimestamp } from "./types"
-import { parseBonds } from "./helpers"
-import { CollateralAreaChart } from "./components/StackedAreaChart"
-import { BondsTable } from "./components/Table"
+import { BondsAtBlockDocument, BondsDocument, execute } from "../.graphclient"
+import { BLOCKS_MONTHLY } from "../constants"
+import { Bond, BondsAtTimestamp } from "../types"
+import { parseBonds } from "../helpers"
+import { CollateralAreaChart } from "../components/StackedAreaChart"
+import { BondsTable } from "../components/Table"
+import Error from "./error"
 import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
-import "./App.css"
-
-const Loading = () => {
-    return (
-        <div className="App">
-            <div className="App-fullscreen">
-                <p>Loading...</p>
-            </div>
-        </div>
-    )
-}
-
-const Error = () => {
-    return (
-        <div className="App">
-            <div className="App-fullscreen">
-                <p>Error!</p>
-            </div>
-        </div>
-    )
-}
+import "../App.css"
+import Loading from "./loading"
 
 const App = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)

@@ -1835,6 +1835,13 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
                     },
                     location: "BondsAtBlockDocument.graphql",
                 },
+                {
+                    document: BondDocument,
+                    get rawSDL() {
+                        return printWithCache(BondDocument)
+                    },
+                    location: "BondDocument.graphql",
+                },
             ]
         },
         fetchFn,
@@ -1934,6 +1941,28 @@ export type BondsAtBlockQuery = {
     _meta?: Maybe<{ block: Pick<_Block_, "number" | "timestamp"> }>
 }
 
+export type BondQueryVariables = Exact<{
+    address: Scalars["ID"]
+}>
+
+export type BondQuery = {
+    bond?: Maybe<
+        Pick<
+            Bond,
+            | "id"
+            | "startDate"
+            | "maturityDate"
+            | "totalCollateral"
+            | "totalDebt"
+            | "isMature"
+        > & {
+            tranches: Array<Pick<Tranche, "index" | "ratio">>
+            collateral: Pick<Token, "name" | "symbol" | "id" | "decimals">
+        }
+    >
+    _meta?: Maybe<{ block: Pick<_Block_, "number" | "timestamp"> }>
+}
+
 export const bondDataFragmentDoc = gql`
     fragment bondData on Bond {
         id
@@ -1992,6 +2021,22 @@ export const BondsAtBlockDocument = gql`
     ${bondDataFragmentDoc}
     ${blockDataFragmentDoc}
 ` as unknown as DocumentNode<BondsAtBlockQuery, BondsAtBlockQueryVariables>
+export const BondDocument = gql`
+    query Bond($address: ID!) {
+        bond(id: $address) {
+            ...bondData
+            tranches(orderDirection: asc, orderBy: index) {
+                ...trancheData
+            }
+        }
+        _meta {
+            ...blockData
+        }
+    }
+    ${bondDataFragmentDoc}
+    ${trancheDataFragmentDoc}
+    ${blockDataFragmentDoc}
+` as unknown as DocumentNode<BondQuery, BondQueryVariables>
 
 export type Requester<C = {}, E = unknown> = <R, V>(
     doc: DocumentNode,
@@ -2019,6 +2064,13 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
                 variables,
                 options
             ) as Promise<BondsAtBlockQuery>
+        },
+        Bond(variables: BondQueryVariables, options?: C): Promise<BondQuery> {
+            return requester<BondQuery, BondQueryVariables>(
+                BondDocument,
+                variables,
+                options
+            ) as Promise<BondQuery>
         },
     }
 }
