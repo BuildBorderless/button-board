@@ -64,6 +64,5 @@
     },
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
-    },
-    "homepage": "https://buildborderless.github.io/button-board"
+    }
 }

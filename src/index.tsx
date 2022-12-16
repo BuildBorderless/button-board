@@ -9,7 +9,7 @@ import reportWebVitals from "./reportWebVitals"
 
 const router = createBrowserRouter([
     {
-        path: "/button-board/bond/:bondAddress",
+        path: "/bond/:bondAddress",
         element: <Bond />,
         errorElement: <Error />,
     },
