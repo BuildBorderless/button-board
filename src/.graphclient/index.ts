@@ -1894,11 +1894,24 @@ export type bondDataFragment = Pick<
     | "startDate"
     | "maturityDate"
     | "totalCollateral"
+    | "totalCollateralAtMaturity"
     | "totalDebt"
+    | "totalDebtAtMaturity"
     | "isMature"
 > & { collateral: Pick<Token, "name" | "symbol" | "id" | "decimals"> }
 
-export type trancheDataFragment = Pick<Tranche, "index" | "ratio">
+export type trancheDataFragment = Pick<
+    Tranche,
+    | "index"
+    | "ratio"
+    | "totalCollateral"
+    | "totalCollateralAtMaturity"
+    | "totalSupplyAtMaturity"
+> & {
+    token: Pick<Token, "id" | "name" | "symbol" | "decimals" | "totalSupply">
+}
+
+export type trancheDataMinFragment = Pick<Tranche, "index" | "ratio">
 
 export type blockDataFragment = { block: Pick<_Block_, "number" | "timestamp"> }
 
@@ -1912,7 +1925,9 @@ export type BondsQuery = {
             | "startDate"
             | "maturityDate"
             | "totalCollateral"
+            | "totalCollateralAtMaturity"
             | "totalDebt"
+            | "totalDebtAtMaturity"
             | "isMature"
         > & {
             tranches: Array<Pick<Tranche, "index" | "ratio">>
@@ -1934,7 +1949,9 @@ export type BondsAtBlockQuery = {
             | "startDate"
             | "maturityDate"
             | "totalCollateral"
+            | "totalCollateralAtMaturity"
             | "totalDebt"
+            | "totalDebtAtMaturity"
             | "isMature"
         > & { collateral: Pick<Token, "name" | "symbol" | "id" | "decimals"> }
     >
@@ -1953,10 +1970,26 @@ export type BondQuery = {
             | "startDate"
             | "maturityDate"
             | "totalCollateral"
+            | "totalCollateralAtMaturity"
             | "totalDebt"
+            | "totalDebtAtMaturity"
             | "isMature"
         > & {
-            tranches: Array<Pick<Tranche, "index" | "ratio">>
+            tranches: Array<
+                Pick<
+                    Tranche,
+                    | "index"
+                    | "ratio"
+                    | "totalCollateral"
+                    | "totalCollateralAtMaturity"
+                    | "totalSupplyAtMaturity"
+                > & {
+                    token: Pick<
+                        Token,
+                        "id" | "name" | "symbol" | "decimals" | "totalSupply"
+                    >
+                }
+            >
             collateral: Pick<Token, "name" | "symbol" | "id" | "decimals">
         }
     >
@@ -1969,7 +2002,9 @@ export const bondDataFragmentDoc = gql`
         startDate
         maturityDate
         totalCollateral
+        totalCollateralAtMaturity
         totalDebt
+        totalDebtAtMaturity
         isMature
         collateral {
             name
@@ -1983,8 +2018,24 @@ export const trancheDataFragmentDoc = gql`
     fragment trancheData on Tranche {
         index
         ratio
+        totalCollateral
+        totalCollateralAtMaturity
+        totalSupplyAtMaturity
+        token {
+            id
+            name
+            symbol
+            decimals
+            totalSupply
+        }
     }
 ` as unknown as DocumentNode<trancheDataFragment, unknown>
+export const trancheDataMinFragmentDoc = gql`
+    fragment trancheDataMin on Tranche {
+        index
+        ratio
+    }
+` as unknown as DocumentNode<trancheDataMinFragment, unknown>
 export const blockDataFragmentDoc = gql`
     fragment blockData on _Meta_ {
         block {
@@ -1998,7 +2049,7 @@ export const BondsDocument = gql`
         bonds {
             ...bondData
             tranches(orderDirection: asc, orderBy: index) {
-                ...trancheData
+                ...trancheDataMin
             }
         }
         _meta {
@@ -2006,7 +2057,7 @@ export const BondsDocument = gql`
         }
     }
     ${bondDataFragmentDoc}
-    ${trancheDataFragmentDoc}
+    ${trancheDataMinFragmentDoc}
     ${blockDataFragmentDoc}
 ` as unknown as DocumentNode<BondsQuery, BondsQueryVariables>
 export const BondsAtBlockDocument = gql`

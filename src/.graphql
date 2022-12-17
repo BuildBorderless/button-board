@@ -3,7 +3,9 @@ fragment bondData on Bond {
     startDate
     maturityDate
     totalCollateral
+    totalCollateralAtMaturity
     totalDebt
+    totalDebtAtMaturity
     isMature
     collateral {
         name
@@ -14,6 +16,21 @@ fragment bondData on Bond {
 }
 
 fragment trancheData on Tranche {
+    index
+    ratio
+    totalCollateral
+    totalCollateralAtMaturity
+    totalSupplyAtMaturity
+    token {
+        id
+        name
+        symbol
+        decimals
+        totalSupply
+    }
+}
+
+fragment trancheDataMin on Tranche {
     index
     ratio
 }
@@ -29,7 +46,7 @@ query Bonds {
     bonds {
         ...bondData
         tranches(orderDirection: asc, orderBy: index) {
-            ...trancheData
+            ...trancheDataMin
         }
     }
     _meta {

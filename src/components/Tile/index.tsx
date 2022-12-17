@@ -1,8 +1,8 @@
 import { Grid, Link, Paper, Typography } from "@mui/material"
 
 interface TileProps {
-    title: string
-    value: string | number
+    title?: string
+    value?: string | number
     subtitle?: string
     linkTitle?: string
     linkHref?: string
@@ -22,6 +22,7 @@ export const Tile = ({
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
+                    alignItems: "flex-start",
                     height: 240,
                 }}
             >
@@ -31,16 +32,14 @@ export const Tile = ({
                     color="primary"
                     gutterBottom
                 >
-                    {title}
+                    {title ?? ""}
                 </Typography>
                 <Typography component="p" variant="h4">
-                    {value}
+                    {value ?? ""}
                 </Typography>
-                {subtitle ? (
-                    <Typography color="text.secondary" sx={{ flex: 1 }}>
-                        {subtitle}
-                    </Typography>
-                ) : null}
+                <Typography color="text.secondary" sx={{ flex: 1 }}>
+                    {subtitle ?? ""}
+                </Typography>
                 {linkTitle ? (
                     <Link
                         color="primary"

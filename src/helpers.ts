@@ -1,16 +1,54 @@
 import { Bond, RawBlock, RawBond, RawTranche, Tranche } from "./types"
 
 const parseTranche = (rawTranche: RawTranche): Tranche => {
+    const decimals = rawTranche.token
+        ? parseInt(rawTranche.token.decimals)
+        : undefined
+    const totalCollateral =
+        decimals && rawTranche.totalCollateral
+            ? parseInt(rawTranche.totalCollateral) / 10 ** decimals
+            : undefined
+    const totalCollateralAtMaturity =
+        decimals && rawTranche.totalCollateralAtMaturity
+            ? parseInt(rawTranche.totalCollateralAtMaturity) / 10 ** decimals
+            : undefined
+    const totalSupplyAtMaturity =
+        decimals && rawTranche.totalSupplyAtMaturity
+            ? parseInt(rawTranche.totalSupplyAtMaturity) / 10 ** decimals
+            : undefined
+
+    const token =
+        rawTranche.token && decimals
+            ? {
+                  id: rawTranche.token.id,
+                  name: rawTranche.token.name,
+                  symbol: rawTranche.token.symbol,
+                  decimals,
+                  totalSupply:
+                      parseInt(rawTranche.token.totalSupply) / 10 ** decimals,
+              }
+            : undefined
+
     return {
         index: parseInt(rawTranche.index),
         ratio: parseInt(rawTranche.ratio) / 10,
+        totalCollateral,
+        totalCollateralAtMaturity,
+        totalSupplyAtMaturity,
+        token,
     }
 }
 
 export const parseBond = (rawBond: RawBond, block: RawBlock): Bond => {
     const decimals = parseInt(rawBond.collateral.decimals)
     const totalCollateral = parseInt(rawBond.totalCollateral) / 10 ** decimals
+    const totalCollateralAtMaturity = rawBond.totalCollateralAtMaturity
+        ? parseInt(rawBond.totalCollateralAtMaturity) / 10 ** decimals
+        : undefined
     const totalDebt = parseInt(rawBond.totalDebt) / 10 ** decimals
+    const totalDebtAtMaturity = rawBond.totalDebtAtMaturity
+        ? parseInt(rawBond.totalDebtAtMaturity) / 10 ** decimals
+        : undefined
 
     const startDate = new Date(parseInt(rawBond.startDate) * 1000)
     const maturityDate = new Date(parseInt(rawBond.maturityDate) * 1000)
@@ -25,7 +63,9 @@ export const parseBond = (rawBond: RawBond, block: RawBlock): Bond => {
         startDate,
         maturityDate,
         totalCollateral,
+        totalCollateralAtMaturity,
         totalDebt,
+        totalDebtAtMaturity,
         block: {
             number: block.number,
             date: blockDate,
@@ -51,7 +91,8 @@ export const getCdr = (bond: Bond) => {
     return bond.totalCollateral / bond.totalDebt
 }
 
-export const formatNumber = (num: number): string => {
+export const formatNumber = (num: number | undefined): string => {
+    if (!num) return "?"
     if (num < 10 ** 3) {
         return num.toLocaleString("en-US", {
             minimumFractionDigits: 2,
@@ -86,10 +127,12 @@ export const getTrancheRatios = (tranches: Tranche[]) => {
         }, "")
         .replace(/ \/ $/gm, "") // remove trailing " / "
 }
-export const formatAddress = (address: string) => {
+export const formatAddress = (address: string | undefined) => {
+    if (!address) return "0x?"
     return address.substring(0, 6) + "..." + address.substring(37, 41)
 }
 
-export const getEtherscanUrl = (address: string) => {
+export const getEtherscanUrl = (address: string | undefined) => {
+    if (!address) return "#"
     return "https://etherscan.io/address/" + address
 }
