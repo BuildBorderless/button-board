@@ -69,6 +69,7 @@ const App = () => {
     return (
         <div className="App">
             <div className="App-fullscreen">
+                <h1 hidden>Bonds</h1>
                 <BondsTable
                     bonds={bondsAtTimestamp[currentTimestamp]}
                     selected={selected}

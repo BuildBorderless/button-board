@@ -86,3 +86,10 @@ export const getTrancheRatios = (tranches: Tranche[]) => {
         }, "")
         .replace(/ \/ $/gm, "") // remove trailing " / "
 }
+export const formatAddress = (address: string) => {
+    return address.substring(0, 6) + "..." + address.substring(37, 41)
+}
+
+export const getEtherscanUrl = (address: string) => {
+    return "https://etherscan.io/address/" + address
+}
