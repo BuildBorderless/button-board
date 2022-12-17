@@ -92,7 +92,7 @@ export const getCdr = (bond: Bond) => {
 }
 
 export const formatNumber = (num: number | undefined): string => {
-    if (!num) return "?"
+    if (!num) return "0.00"
     if (num < 10 ** 3) {
         return num.toLocaleString("en-US", {
             minimumFractionDigits: 2,
@@ -101,7 +101,8 @@ export const formatNumber = (num: number | undefined): string => {
     }
     if (num < 10 ** 6) {
         return num.toLocaleString("en-US", {
-            maximumFractionDigits: 0,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
         })
     }
     if (num < 10 ** 9) {
