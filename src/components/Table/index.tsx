@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography"
 import Paper from "@mui/material/Paper"
 import Checkbox from "@mui/material/Checkbox"
 import { visuallyHidden } from "@mui/utils"
+import LaunchIcon from "@mui/icons-material/Launch"
 import { Bond } from "../../types"
 import {
     dateToString,
@@ -21,6 +22,8 @@ import {
     getCdr,
     getTrancheRatios,
 } from "../../helpers"
+import { IconButton, Tooltip } from "@mui/material"
+import { Link } from "react-router-dom"
 
 interface Data {
     address: string
@@ -70,6 +73,11 @@ const headCells: readonly HeadCell[] = [
         id: "collateralName",
         numeric: false,
         label: "Collateral",
+    },
+    {
+        id: "startDateString",
+        numeric: false,
+        label: "",
     },
     {
         id: "startDateString",
@@ -350,6 +358,21 @@ export const BondsTable = ({
                                                 padding="none"
                                             >
                                                 {row.collateralName}
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                id={labelId}
+                                                scope="row"
+                                                padding="none"
+                                            >
+                                                <Tooltip title="Show Details">
+                                                    <IconButton
+                                                        component={Link}
+                                                        to={`/bond/${row.address}`}
+                                                    >
+                                                        <LaunchIcon />
+                                                    </IconButton>
+                                                </Tooltip>
                                             </TableCell>
                                             <TableCell align="right">
                                                 {row.startDateString}
