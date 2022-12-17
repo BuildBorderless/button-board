@@ -369,6 +369,7 @@ export const BondsTable = ({
                                                     <IconButton
                                                         component={Link}
                                                         to={`/bond/${row.address}`}
+                                                        target="_blank"
                                                     >
                                                         <LaunchIcon />
                                                     </IconButton>
