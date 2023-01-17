@@ -27,6 +27,7 @@ import { Link } from "react-router-dom"
 
 interface Data {
     address: string
+    detailsId: string
     isMatureString: string
     startDateString: string
     maturityDateString: string
@@ -75,7 +76,7 @@ const headCells: readonly HeadCell[] = [
         label: "Collateral",
     },
     {
-        id: "startDateString",
+        id: "detailsId",
         numeric: false,
         label: "",
     },
@@ -234,6 +235,7 @@ export const BondsTable = ({
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const rows = bonds.map((b) => ({
         address: b.id,
+        detailsId: b.id,
         isMatureString: b.isMature ? "Yes" : "No",
         startDateString: dateToString(b.startDate),
         maturityDateString: dateToString(b.maturityDate),
@@ -368,7 +370,7 @@ export const BondsTable = ({
                                                 <Tooltip title="Show Details">
                                                     <IconButton
                                                         component={Link}
-                                                        to={`/bond/${row.address}`}
+                                                        to={`/bond/${row.detailsId}`}
                                                         target="_blank"
                                                     >
                                                         <LaunchIcon />
