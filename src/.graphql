@@ -33,6 +33,7 @@ fragment trancheData on Tranche {
 fragment trancheDataMin on Tranche {
     index
     ratio
+    totalCollateral
 }
 
 fragment blockData on _Meta_ {

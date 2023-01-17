@@ -136,6 +136,10 @@ export namespace TrancheTypes {
         modified_not_in?: InputMaybe<Array<Scalars["BigInt"]>>
         transaction?: InputMaybe<Scalars["Bytes"]>
         transaction_not?: InputMaybe<Scalars["Bytes"]>
+        transaction_gt?: InputMaybe<Scalars["Bytes"]>
+        transaction_lt?: InputMaybe<Scalars["Bytes"]>
+        transaction_gte?: InputMaybe<Scalars["Bytes"]>
+        transaction_lte?: InputMaybe<Scalars["Bytes"]>
         transaction_in?: InputMaybe<Array<Scalars["Bytes"]>>
         transaction_not_in?: InputMaybe<Array<Scalars["Bytes"]>>
         transaction_contains?: InputMaybe<Scalars["Bytes"]>

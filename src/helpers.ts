@@ -39,9 +39,25 @@ const parseTranche = (rawTranche: RawTranche): Tranche => {
     }
 }
 
+/**
+ * this function is required because the subgraph returns 0 for
+ * total collateral when bond is mature that's not always correct.
+ */
+const getTotalBondCollateral = (bond: RawBond) => {
+    if (bond.isMature) {
+        // if bond is mature, return sum of totalCollateral over tranches
+        return (
+            bond.tranches?.reduce((total, tranche) => {
+                return total + parseInt(tranche.totalCollateral ?? "0")
+            }, 0) ?? 0
+        )
+    }
+    return parseInt(bond.totalCollateral)
+}
+
 export const parseBond = (rawBond: RawBond, block: RawBlock): Bond => {
     const decimals = parseInt(rawBond.collateral.decimals)
-    const totalCollateral = parseInt(rawBond.totalCollateral) / 10 ** decimals
+    const totalCollateral = getTotalBondCollateral(rawBond) / 10 ** decimals
     const totalCollateralAtMaturity = rawBond.totalCollateralAtMaturity
         ? parseInt(rawBond.totalCollateralAtMaturity) / 10 ** decimals
         : undefined

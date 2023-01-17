@@ -169,6 +169,10 @@ export type AccountBalance_filter = {
     modified_not_in?: InputMaybe<Array<Scalars["BigInt"]>>
     transaction?: InputMaybe<Scalars["Bytes"]>
     transaction_not?: InputMaybe<Scalars["Bytes"]>
+    transaction_gt?: InputMaybe<Scalars["Bytes"]>
+    transaction_lt?: InputMaybe<Scalars["Bytes"]>
+    transaction_gte?: InputMaybe<Scalars["Bytes"]>
+    transaction_lte?: InputMaybe<Scalars["Bytes"]>
     transaction_in?: InputMaybe<Array<Scalars["Bytes"]>>
     transaction_not_in?: InputMaybe<Array<Scalars["Bytes"]>>
     transaction_contains?: InputMaybe<Scalars["Bytes"]>
@@ -1911,7 +1915,10 @@ export type trancheDataFragment = Pick<
     token: Pick<Token, "id" | "name" | "symbol" | "decimals" | "totalSupply">
 }
 
-export type trancheDataMinFragment = Pick<Tranche, "index" | "ratio">
+export type trancheDataMinFragment = Pick<
+    Tranche,
+    "index" | "ratio" | "totalCollateral"
+>
 
 export type blockDataFragment = { block: Pick<_Block_, "number" | "timestamp"> }
 
@@ -1930,7 +1937,9 @@ export type BondsQuery = {
             | "totalDebtAtMaturity"
             | "isMature"
         > & {
-            tranches: Array<Pick<Tranche, "index" | "ratio">>
+            tranches: Array<
+                Pick<Tranche, "index" | "ratio" | "totalCollateral">
+            >
             collateral: Pick<Token, "name" | "symbol" | "id" | "decimals">
         }
     >
@@ -2034,6 +2043,7 @@ export const trancheDataMinFragmentDoc = gql`
     fragment trancheDataMin on Tranche {
         index
         ratio
+        totalCollateral
     }
 ` as unknown as DocumentNode<trancheDataMinFragment, unknown>
 export const blockDataFragmentDoc = gql`

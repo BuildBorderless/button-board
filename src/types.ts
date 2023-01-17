@@ -21,7 +21,7 @@ export interface RawTrancheToken {
 export interface RawTranche {
     index: string
     ratio: string
-    totalCollateral?: string
+    totalCollateral: string
     totalCollateralAtMaturity?: string
     totalSupplyAtMaturity?: string
     token?: RawTrancheToken

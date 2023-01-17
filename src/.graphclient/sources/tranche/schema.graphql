@@ -137,6 +137,10 @@ input AccountBalance_filter {
     modified_not_in: [BigInt!]
     transaction: Bytes
     transaction_not: Bytes
+    transaction_gt: Bytes
+    transaction_lt: Bytes
+    transaction_gte: Bytes
+    transaction_lte: Bytes
     transaction_in: [Bytes!]
     transaction_not_in: [Bytes!]
     transaction_contains: Bytes

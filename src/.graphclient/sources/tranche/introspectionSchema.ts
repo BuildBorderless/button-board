@@ -1669,6 +1669,66 @@ const schemaAST = {
                     kind: "InputValueDefinition",
                     name: {
                         kind: "Name",
+                        value: "transaction_gt",
+                    },
+                    type: {
+                        kind: "NamedType",
+                        name: {
+                            kind: "Name",
+                            value: "Bytes",
+                        },
+                    },
+                    directives: [],
+                },
+                {
+                    kind: "InputValueDefinition",
+                    name: {
+                        kind: "Name",
+                        value: "transaction_lt",
+                    },
+                    type: {
+                        kind: "NamedType",
+                        name: {
+                            kind: "Name",
+                            value: "Bytes",
+                        },
+                    },
+                    directives: [],
+                },
+                {
+                    kind: "InputValueDefinition",
+                    name: {
+                        kind: "Name",
+                        value: "transaction_gte",
+                    },
+                    type: {
+                        kind: "NamedType",
+                        name: {
+                            kind: "Name",
+                            value: "Bytes",
+                        },
+                    },
+                    directives: [],
+                },
+                {
+                    kind: "InputValueDefinition",
+                    name: {
+                        kind: "Name",
+                        value: "transaction_lte",
+                    },
+                    type: {
+                        kind: "NamedType",
+                        name: {
+                            kind: "Name",
+                            value: "Bytes",
+                        },
+                    },
+                    directives: [],
+                },
+                {
+                    kind: "InputValueDefinition",
+                    name: {
+                        kind: "Name",
                         value: "transaction_in",
                     },
                     type: {
