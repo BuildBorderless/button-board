@@ -12,4 +12,5 @@ export const BLOCKS_MONTHLY = [
     { number: 15871181, timestamp: 1667257211000 },
     { number: 16085936, timestamp: 1669849211000 },
     { number: 16307891, timestamp: 1672527611000 },
+    { number: 16529948, timestamp: 1675206011000 },
 ]
